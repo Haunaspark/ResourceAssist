@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MCRT</title>
+
+    <!-- Meta tags for mobile web app capability -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+            font-family: Arial, sans-serif;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        #frame-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Loading overlay styles */
+        #loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            transition: opacity 0.5s ease;
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #loader span {
+            font-size: 18px;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            html, body {
+                flex-direction: column;
+            }
+
+            #frame-container {
+                height: 100vh;
+            }
+
+            iframe {
+                height: 100vh;
+            }
+        }
+    </style>
+
+    <script>
+        // Developer tools detection
+        setInterval(() => {
+            if (window.outerWidth - window.innerWidth > 160 || window.outerHeight - window.innerHeight > 160) {
+                document.body.innerHTML = "<h2 style='text-align:center;padding:20px;'>Inspecting is disabled!</h2>";
+            }
+        }, 1000);
+
+        // Hide loader when iframe loads
+        function hideLoader() {
+            const loader = document.getElementById('loader');
+            loader.classList.add('hidden');
+        }
+    </script>
+</head>
+<body>
+    <div id="frame-container">
+        <div id="loader">
+            <span>Loading...</span>
+        </div>
+        <iframe
+            id="embeddedPage"
+            src="https://tubular-mooncake-cb666d.netlify.app/"
+            title="Embedded MCRT Page"
+            loading="lazy"
+            allowfullscreen
+            onload="hideLoader()"
+        >
+            Your browser does not support iframes. 
+            <a href="https://tubular-mooncake-cb666d.netlify.app/" target="_blank">Click here</a> to view the content.
+        </iframe>
+    </div>
+</body>
+</html>
